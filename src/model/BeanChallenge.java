@@ -15,7 +15,9 @@ public class BeanChallenge {
         this.whetherZudui = whetherZudui;
         this.description = description;
     }
+    public BeanChallenge() {
 
+    }
     public int getChallengeId() {
         return challengeId;
     }

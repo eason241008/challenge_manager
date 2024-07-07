@@ -160,7 +160,6 @@ public class loadFrm extends JFrame {
 					.addGap(64))
 		);
 		this.setLocationRelativeTo(null);
-		
 		contentPane.setLayout(gl_contentPane);
 	}
 

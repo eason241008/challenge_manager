@@ -1,9 +1,15 @@
 package control;
 import java.sql.*;
 
+
 import model.BeanAdministrators;
 import model.Beanstudent;
 import util.*;
+/**
+ * 用户管理
+ * @author 13020
+ *
+ */
 public class AdminManager {
 	public static BeanAdministrators adminlogin(Connection con, BeanAdministrators Administrator) throws Exception {
     	BeanAdministrators resultAdmin = null;

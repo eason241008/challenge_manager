@@ -13,6 +13,9 @@ public class BeanTeacher {
         this.department = department;
         this.email = email;
     }
+    public  BeanTeacher() {
+		
+	}
 
     public int getTeacherId() {
         return teacherId;

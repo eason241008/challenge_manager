@@ -97,6 +97,7 @@ public class studentMainFrm extends JFrame {
 
         currentPanel = new JPanel(); // 初始化为默认面板
         contentPane.add(currentPanel, BorderLayout.CENTER);
+        this.setLocationRelativeTo(null);
     }
 
     public studentMainFrm() {
@@ -172,6 +173,7 @@ public class studentMainFrm extends JFrame {
 
             add(controlPanel, BorderLayout.NORTH);
             add(resultArea, BorderLayout.CENTER);
+            
         }
 
         private String[] getYearRange() {

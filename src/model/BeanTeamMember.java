@@ -10,7 +10,9 @@ public class BeanTeamMember {
         this.teamId = teamId;
         this.isLeader = isLeader;
     }
-
+    public BeanTeamMember() {
+	// TODO Auto-generated constructor stub
+}
     public int getStudentId() {
         return studentId;
     }

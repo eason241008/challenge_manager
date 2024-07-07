@@ -5,11 +5,11 @@ public class BeanTeam {
     private int competitionId;
     private String teamName;
     private String teamNameEng;
-    private Date createTime;
-    private String memberCounts;
+    private String createTime;
+    private int memberCounts;
     private String remark;
 
-    public BeanTeam(int teamId, int competitionId, String teamName, String teamNameEng, Date createTime, String memberCounts, String remark) {
+    public BeanTeam(int teamId, int competitionId, String teamName, String teamNameEng, String createTime, int memberCounts, String remark) {
         this.teamId = teamId;
         this.competitionId = competitionId;
         this.teamName = teamName;
@@ -17,6 +17,9 @@ public class BeanTeam {
         this.createTime = createTime;
         this.memberCounts = memberCounts;
         this.remark = remark;
+    }
+    public BeanTeam() {
+    	
     }
 
     public int getTeamId() {
@@ -51,19 +54,19 @@ public class BeanTeam {
         this.teamNameEng = teamNameEng;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public String getMemberCounts() {
+    public int getMemberCounts() {
         return memberCounts;
     }
 
-    public void setMemberCounts(String memberCounts) {
+    public void setMemberCounts(int memberCounts) {
         this.memberCounts = memberCounts;
     }
 

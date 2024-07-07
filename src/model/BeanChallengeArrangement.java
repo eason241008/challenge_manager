@@ -14,6 +14,8 @@ public class BeanChallengeArrangement {
         this.heldTime = heldTime;
         this.heldAddress = heldAddress;
     }
+    public BeanChallengeArrangement() {
+    }
 
     public int getCompetitionId() {
         return competitionId;
