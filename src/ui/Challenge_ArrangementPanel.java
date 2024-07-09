@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.Font;
 
@@ -21,9 +18,12 @@ public class Challenge_ArrangementPanel extends JPanel {
     private JTextField competitionId;
     private JTextField challengeId;
     private JTextField competitionName;
-    private JTextField heldTime;
+    private JComboBox<Integer> yearComboBox;
+    private JComboBox<Integer> monthComboBox;
+    private JComboBox<Integer> dayComboBox;
     private JTextField heldAddress;
     private Challenge_ArrangementManager Challenge_ArrangementManager;
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public Challenge_ArrangementPanel() {
         Challenge_ArrangementManager = new Challenge_ArrangementManager();
@@ -35,13 +35,13 @@ public class Challenge_ArrangementPanel extends JPanel {
         competitionId = createTextField();
         challengeId = createTextField();
         competitionName = createTextField();
-        heldTime = createTextField();
         heldAddress = createTextField();
+        createComboBoxes();
 
         addTextFieldWithLabel(inputPanel, "赛事ID:", competitionId);
         addTextFieldWithLabel(inputPanel, "竞赛ID:", challengeId);
         addTextFieldWithLabel(inputPanel, "赛事名:", competitionName);
-        addTextFieldWithLabel(inputPanel, "举办时间:", heldTime);
+        addDateComboBoxesWithLabel(inputPanel, "举办时间:");
         addTextFieldWithLabel(inputPanel, "举办地点:", heldAddress);
 
         add(inputPanel, BorderLayout.CENTER);
@@ -62,11 +62,40 @@ public class Challenge_ArrangementPanel extends JPanel {
         return textField;
     }
 
+    private void createComboBoxes() {
+        yearComboBox = new JComboBox<>();
+        for (int year = 2010; year <= 2023; year++) {
+            yearComboBox.addItem(year);
+        }
+
+        monthComboBox = new JComboBox<>();
+        for (int month = 1; month <= 12; month++) {
+            monthComboBox.addItem(month);
+        }
+
+        dayComboBox = new JComboBox<>();
+        for (int day = 1; day <= 31; day++) {
+            dayComboBox.addItem(day);
+        }
+    }
+
     private void addTextFieldWithLabel(JPanel panel, String labelText, JTextField textField) {
         JLabel label = new JLabel(labelText);
         label.setBorder(new EmptyBorder(1, 1, 1, 1));
         panel.add(label);
         panel.add(textField);
+    }
+
+    private void addDateComboBoxesWithLabel(JPanel panel, String labelText) {
+        JLabel label = new JLabel(labelText);
+        label.setBorder(new EmptyBorder(1, 1, 1, 1));
+        panel.add(label);
+
+        JPanel datePanel = new JPanel(new GridLayout(1, 3));
+        datePanel.add(yearComboBox);
+        datePanel.add(monthComboBox);
+        datePanel.add(dayComboBox);
+        panel.add(datePanel);
     }
 
     private void addButton(String buttonText, ActionListener action, JPanel panel) {
@@ -79,7 +108,6 @@ public class Challenge_ArrangementPanel extends JPanel {
         if (competitionId.getText().isEmpty() ||
             challengeId.getText().isEmpty() ||
             competitionName.getText().isEmpty() ||
-            heldTime.getText().isEmpty() ||
             heldAddress.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "所有字段必须填写完整才能添加赛事信息！");
             return;
@@ -94,11 +122,13 @@ public class Challenge_ArrangementPanel extends JPanel {
             return;
         }
 
+        LocalDate heldTimeValue = getSelectedDate();
+
         BeanChallengeArrangement competition = new BeanChallengeArrangement();
         competition.setCompetitionId(Integer.parseInt(competitionId.getText()));
         competition.setChallengeId(challengeIdValue);
         competition.setCompetitionName(competitionName.getText());
-        competition.setHeldTime(heldTime.getText());
+        competition.setHeldTime(Date.valueOf(heldTimeValue));
         competition.setHeldAddress(heldAddress.getText());
 
         boolean success = Challenge_ArrangementManager.addArrangement(competition);
@@ -108,6 +138,7 @@ public class Challenge_ArrangementPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "添加失败!");
         }
     }
+
     private void deleteCompetition() {
         if (competitionId.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "请输入赛事ID以进行删除操作！");
@@ -127,7 +158,6 @@ public class Challenge_ArrangementPanel extends JPanel {
         if (competitionId.getText().isEmpty() ||
             challengeId.getText().isEmpty() ||
             competitionName.getText().isEmpty() ||
-            heldTime.getText().isEmpty() ||
             heldAddress.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "所有字段必须填写完整才能修改赛事信息！");
             return;
@@ -139,10 +169,13 @@ public class Challenge_ArrangementPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "赛事不存在!");
             return;
         }
+
+        LocalDate heldTimeValue = getSelectedDate();
+
         challengeArrangement.setCompetitionId(Integer.parseInt(competitionId.getText()));
         challengeArrangement.setChallengeId(Integer.parseInt(challengeId.getText()));
         challengeArrangement.setCompetitionName(competitionName.getText());
-        challengeArrangement.setHeldTime(heldTime.getText());
+        challengeArrangement.setHeldTime(Date.valueOf(heldTimeValue));
         challengeArrangement.setHeldAddress(heldAddress.getText());
 
         boolean success = Challenge_ArrangementManager.updateArrangement(challengeArrangement);
@@ -162,13 +195,23 @@ public class Challenge_ArrangementPanel extends JPanel {
         int competitionid = Integer.parseInt(competitionId.getText());
         BeanChallengeArrangement challengeArrangement = Challenge_ArrangementManager.findArrangement(competitionid);
         if (challengeArrangement != null) {
-        	competitionId.setText(String.valueOf(challengeArrangement.getCompetitionId()));
+            competitionId.setText(String.valueOf(challengeArrangement.getCompetitionId()));
             challengeId.setText(String.valueOf(challengeArrangement.getChallengeId()));
             competitionName.setText(challengeArrangement.getCompetitionName());
-            heldTime.setText(challengeArrangement.getHeldTime());
+            LocalDate heldTimeValue = ((Date)challengeArrangement.getHeldTime()).toLocalDate();
+            yearComboBox.setSelectedItem(heldTimeValue.getYear());
+            monthComboBox.setSelectedItem(heldTimeValue.getMonthValue());
+            dayComboBox.setSelectedItem(heldTimeValue.getDayOfMonth());
             heldAddress.setText(challengeArrangement.getHeldAddress());
         } else {
             JOptionPane.showMessageDialog(this, "赛事不存在!");
         }
+    }
+
+    private LocalDate getSelectedDate() {
+        int year = (int) yearComboBox.getSelectedItem();
+        int month = (int) monthComboBox.getSelectedItem();
+        int day = (int) dayComboBox.getSelectedItem();
+        return LocalDate.of(year, month, day);
     }
 }

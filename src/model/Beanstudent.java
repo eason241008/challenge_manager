@@ -4,7 +4,7 @@ import  java.util.*;
 public class Beanstudent {
     private int studentId;
     private String studentName;
-    private String enrollmentYear;
+    private Date enrollmentYear;
     private String className;
     private String grade;
     private String major;
@@ -13,7 +13,7 @@ public class Beanstudent {
     private String qq;
     private String password;
 
-	public Beanstudent(int studentId, String studentName, String enrollmentYear, String className, String grade, String major, String mobilePhone, String email, String qq) {
+	public Beanstudent(int studentId, String studentName, Date enrollmentYear, String className, String grade, String major, String mobilePhone, String email, String qq) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.enrollmentYear = enrollmentYear;
@@ -24,7 +24,7 @@ public class Beanstudent {
         this.email = email;
         this.qq = qq;
     }
-    public Beanstudent(int studentId, String studentName, String enrollmentYear, String className, String grade, String major, String mobilePhone, String email, String qq,String password) {
+    public Beanstudent(int studentId, String studentName, Date enrollmentYear, String className, String grade, String major, String mobilePhone, String email, String qq,String password) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.enrollmentYear = enrollmentYear;
@@ -58,11 +58,11 @@ public class Beanstudent {
         this.studentName = studentName;
     }
 
-    public String getEnrollmentYear() {
+    public Date getEnrollmentYear() {
         return enrollmentYear;
     }
 
-    public void setEnrollmentYear(String enrollmentYear) {
+    public void setEnrollmentYear(Date enrollmentYear) {
         this.enrollmentYear = enrollmentYear;
     }
 

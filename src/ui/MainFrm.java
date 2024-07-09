@@ -31,9 +31,11 @@ public class MainFrm extends JFrame {
     private TeamChangeInfoPanel teamChangeInfoPanel;
     private JTable table;
     private DefaultTableModel tableModel;
-
+    private AwardMajorPanel awardMajorPanel;
     private TeamManager teamManager;
-
+    private AwardClassPanel awardClassPanel ;
+    private AwardsearchPanel awardsearchPanel;
+    private AwardstuPanel awardstuPanel;
     /**
      * Launch the application.
      */
@@ -67,7 +69,10 @@ public class MainFrm extends JFrame {
         teamPanel = new TeamAddPanel();
         teamChangeInfoPanel = new TeamChangeInfoPanel();
         challenge_ArrangementPanel = new Challenge_ArrangementPanel();
-
+        awardMajorPanel=new AwardMajorPanel();
+        awardClassPanel =new AwardClassPanel();
+        awardsearchPanel=new AwardsearchPanel();
+        awardstuPanel =new AwardstuPanel();
         JMenuItem mntmNewMenuItem = new JMenuItem("学生管理");
         mntmNewMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -134,15 +139,35 @@ public class MainFrm extends JFrame {
         mnNewMenu.add(mntmNewMenuItem_12);
 
         JMenuItem mntmNewMenuItem_21 = new JMenuItem("学生获奖统计");
+        mntmNewMenuItem_21.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		awardstuactionPerformed(e);
+        	}
+        });
         mnNewMenu.add(mntmNewMenuItem_21);
 
         JMenuItem mntmNewMenuItem_24 = new JMenuItem("赛事获奖统计");
+        mntmNewMenuItem_24.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		showchallengeawardactionPerformed(e);
+        	}
+        });
         mnNewMenu.add(mntmNewMenuItem_24);
 
         JMenuItem mntmNewMenuItem_22 = new JMenuItem("班级获奖统计");
+        mntmNewMenuItem_22.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		showClassAwardhangePanel(e);
+        	}
+        });
         mnNewMenu.add(mntmNewMenuItem_22);
 
         JMenuItem mntmNewMenuItem_23 = new JMenuItem("专业获奖统计");
+        mntmNewMenuItem_23.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		awardmajoractionPerformed(e);
+        	}
+        });
         mnNewMenu.add(mntmNewMenuItem_23);
 
         JMenu mnNewMenu_1 = new JMenu("竞赛信息录入");
@@ -209,7 +234,6 @@ public class MainFrm extends JFrame {
 
         this.setLocationRelativeTo(null);
 
-        // Action listeners for the search buttons
         studentSearchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 searchStudentActionPerformed(e);
@@ -243,7 +267,27 @@ public class MainFrm extends JFrame {
         teamManager = new TeamManager();
     }
 
-    protected void teamchangeinfoactionPerformed(ActionEvent e) {
+    protected void awardstuactionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+    	showstuAwardhangePanel();
+	}
+
+	protected void showchallengeawardactionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+    	showchallengeAwardhangePanel();
+	}
+
+	protected void showClassAwardhangePanel(ActionEvent e) {
+		// TODO Auto-generated method stub
+    	showClassAwardhangePanel();
+	}
+
+	protected void awardmajoractionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+    	showMajorAwardhangePanel();
+	}
+
+	protected void teamchangeinfoactionPerformed(ActionEvent e) {
         showTeamchangePanel();
     }
 
@@ -258,6 +302,25 @@ public class MainFrm extends JFrame {
     private void showTeamchangePanel() {
         contentPane.removeAll();
         contentPane.add(teamChangeInfoPanel, BorderLayout.CENTER);
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
+    private void showstuAwardhangePanel() {
+        contentPane.removeAll();
+        contentPane.add(awardstuPanel, BorderLayout.CENTER);
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
+    private void showchallengeAwardhangePanel() {
+    	
+        contentPane.removeAll();
+        contentPane.add(awardsearchPanel, BorderLayout.CENTER);
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
+    private void showMajorAwardhangePanel() {
+        contentPane.removeAll();
+        contentPane.add(awardMajorPanel, BorderLayout.CENTER);
         contentPane.revalidate();
         contentPane.repaint();
     }
@@ -295,6 +358,12 @@ public class MainFrm extends JFrame {
     private void showChallengePanel() {
         contentPane.removeAll();
         contentPane.add(challengePanel, BorderLayout.CENTER);
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
+    private void showClassAwardhangePanel() {
+        contentPane.removeAll();
+        contentPane.add(awardClassPanel, BorderLayout.CENTER);
         contentPane.revalidate();
         contentPane.repaint();
     }

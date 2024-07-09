@@ -1,7 +1,7 @@
-
 package control;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,15 +15,14 @@ import util.DBUtil;
  */
 public class Challenge_ArrangementManager {
 
-
     public boolean addArrangement(BeanChallengeArrangement arrangement) {
-        String sql = "INSERT INTO Challenge_ArrangementInfo (competition_id,challenge_id, competition_name, held_time, held_address) VALUES (? , ?, ?, ?, ?)";
+        String sql = "INSERT INTO Challenge_ArrangementInfo (competition_id, challenge_id, competition_name, held_time, held_address) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = DBUtil.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, arrangement.getCompetitionId());
             pstmt.setInt(2, arrangement.getChallengeId());
             pstmt.setString(3, arrangement.getCompetitionName());
-            pstmt.setString(4, arrangement.getHeldTime());
+            pstmt.setDate(4, new java.sql.Date(arrangement.getHeldTime().getTime()));
             pstmt.setString(5, arrangement.getHeldAddress());
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -31,7 +30,6 @@ public class Challenge_ArrangementManager {
         }
         return false;
     }
-
 
     public boolean deleteArrangement(int competitionId) {
         String sql = "DELETE FROM Challenge_ArrangementInfo WHERE competition_id = ?";
@@ -51,7 +49,7 @@ public class Challenge_ArrangementManager {
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, arrangement.getChallengeId());
             pstmt.setString(2, arrangement.getCompetitionName());
-            pstmt.setString(3, arrangement.getHeldTime());
+            pstmt.setDate(3, new java.sql.Date(arrangement.getHeldTime().getTime()));
             pstmt.setString(4, arrangement.getHeldAddress());
             pstmt.setInt(5, arrangement.getCompetitionId());
             return pstmt.executeUpdate() > 0;
@@ -68,11 +66,11 @@ public class Challenge_ArrangementManager {
             pstmt.setInt(1, competitionId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                	BeanChallengeArrangement arrangement = new BeanChallengeArrangement();
+                    BeanChallengeArrangement arrangement = new BeanChallengeArrangement();
                     arrangement.setCompetitionId(rs.getInt("competition_id"));
                     arrangement.setChallengeId(rs.getInt("challenge_id"));
                     arrangement.setCompetitionName(rs.getString("competition_name"));
-                    arrangement.setHeldTime(rs.getString("held_time"));
+                    arrangement.setHeldTime(rs.getDate("held_time"));
                     arrangement.setHeldAddress(rs.getString("held_address"));
                     return arrangement;
                 }
@@ -82,6 +80,7 @@ public class Challenge_ArrangementManager {
         }
         return null;
     }
+
     public boolean challengeExists(int challengeId) {
         String sql = "SELECT COUNT(*) FROM ChallengeInfo WHERE challenge_id = ?";
         try (Connection con = DBUtil.getConnection();

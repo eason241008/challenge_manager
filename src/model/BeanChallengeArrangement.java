@@ -4,10 +4,10 @@ public class BeanChallengeArrangement {
     private int competitionId;
     private int challengeId;
     private String competitionName;
-    private String heldTime;
+    private Date heldTime;
     private String heldAddress;
 
-    public BeanChallengeArrangement(int competitionId, int challengeId, String competitionName, String heldTime, String heldAddress) {
+    public BeanChallengeArrangement(int competitionId, int challengeId, String competitionName, Date heldTime, String heldAddress) {
         this.competitionId = competitionId;
         this.challengeId = challengeId;
         this.competitionName = competitionName;
@@ -41,11 +41,11 @@ public class BeanChallengeArrangement {
         this.competitionName = competitionName;
     }
 
-    public String getHeldTime() {
+    public Date getHeldTime() {
         return heldTime;
     }
 
-    public void setHeldTime(String heldTime) {
+    public void setHeldTime(Date heldTime) {
         this.heldTime = heldTime;
     }
 

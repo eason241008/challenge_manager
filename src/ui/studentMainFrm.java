@@ -178,7 +178,7 @@ public class studentMainFrm extends JFrame {
 
         private String[] getYearRange() {
             ArrayList<String> years = new ArrayList<>();
-            for (int i = 2010; i <= 2023; i++) {
+            for (int i = 2000; i <= 2024; i++) {
                 years.add(String.valueOf(i));
             }
             return years.toArray(new String[0]);
