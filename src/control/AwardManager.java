@@ -151,5 +151,82 @@ public class AwardManager {
 	        }
 
 	        return awardsList;
+	    }public List<Object[]> getAwardstudentCal(String startDate, String endDate, String studentId, String studentName) {
+	        List<Object[]> awardsList = new ArrayList<>();
+
+	        String query = "SELECT student_id, student_name, class, major, competition_name, challenge_name, award_level, held_time " +
+	                       "FROM AwardView " +
+	                       "WHERE held_time BETWEEN ? AND ? " +
+	                       (studentId != null && !studentId.isEmpty() ? "AND student_id = ? " : "") +
+	                       (studentName != null && !studentName.isEmpty() ? "AND student_name LIKE ? " : "") ;
+
+	        try (Connection connection = DBUtil.getConnection();
+	             PreparedStatement statement = connection.prepareStatement(query)) {
+
+	            int paramIndex = 1;
+	            statement.setString(paramIndex++, startDate);
+	            statement.setString(paramIndex++, endDate);
+
+	            if (studentId != null && !studentId.isEmpty()) {
+	                statement.setString(paramIndex++, studentId);
+	            }
+	            if (studentName != null && !studentName.isEmpty()) {
+	                statement.setString(paramIndex++, "%" + studentName + "%");
+	            }
+//	            if (competitionName != null && !competitionName.isEmpty()) {
+//	                statement.setString(paramIndex++, "%" + competitionName + "%");
+//	            }
+//	            if (challengeName != null && !challengeName.isEmpty()) {
+//	                statement.setString(paramIndex++, "%" + challengeName + "%");
+//	            }
+
+	            ResultSet resultSet = statement.executeQuery();
+	            while (resultSet.next()) {
+	                Object[] row = new Object[8];
+	                row[0] = resultSet.getString("student_name");
+	                row[1] = resultSet.getString("class");
+	                row[2] = resultSet.getString("major");
+	                row[3] = resultSet.getString("competition_name");
+	                row[4] = resultSet.getString("challenge_name");
+	                row[5] = resultSet.getString("award_level");
+	                row[6] = resultSet.getString("held_time");  // 获取获奖时间
+	                awardsList.add(row);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return awardsList;
+	    }
+	    public void addTeamAward(String teamId, String teamName, String competitionId, String competitionName, String challengeName, String awardLevel) {
+	        String query = "INSERT INTO TeamAwards (team_id, team_name, competition_id, competition_name, challenge_name, award_level) VALUES (?, ?, ?, ?, ?, ?)";
+	        try (Connection connection = DBUtil.getConnection();
+	             PreparedStatement statement = connection.prepareStatement(query)) {
+	            statement.setString(1, teamId);
+	            statement.setString(2, teamName);
+	            statement.setString(3, competitionId);
+	            statement.setString(4, competitionName);
+	            statement.setString(5, challengeName);
+	            statement.setString(6, awardLevel);
+	            statement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    public void addPersonalAward(String studentId, String studentName, String competitionId, String competitionName, String challengeName, String awardLevel) {
+	        String query = "INSERT INTO individualteacher_awardinfo (student_id, student_name, competition_id, competition_name, challenge_name, award_level) VALUES (?, ?, ?, ?, ?, ?)";
+	        try (Connection connection = DBUtil.getConnection();
+	             PreparedStatement statement = connection.prepareStatement(query)) {
+	            statement.setString(1, studentId);
+	            statement.setString(2, studentName);
+	            statement.setString(3, competitionId);
+	            statement.setString(4, competitionName);
+	            statement.setString(5, challengeName);
+	            statement.setString(6, awardLevel);
+	            statement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 	    }
 }

@@ -13,15 +13,15 @@ import util.*;
 public class AdminManager {
 	public static BeanAdministrators adminlogin(Connection con, BeanAdministrators Administrator) throws Exception {
     	BeanAdministrators resultAdmin = null;
-        String sql = "SELECT * FROM administrators WHERE admin_id = ? AND password = ?";
+        String sql = "SELECT * FROM administrators WHERE administrator_id = ? AND password = ?";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, Administrator.getAdministratorId());
         pst.setString(2, Administrator.getPassword());
         ResultSet rs = pst.executeQuery();
         if (rs.next()) {
             resultAdmin = new BeanAdministrators();
-            resultAdmin.setAdministratorId(rs.getInt("admin_id"));
-            resultAdmin.setName(rs.getString("admin_name"));
+            resultAdmin.setAdministratorId(rs.getInt("administrator_id"));
+            resultAdmin.setName(rs.getString("administrator_name"));
             resultAdmin.setPassword(rs.getString("password"));
 
         }
@@ -62,6 +62,21 @@ public class AdminManager {
 	    }
 	    if (!StringUtil.isEmpty(student.getClassName())) {
 	        sb.append(" and major = '" + student.getMajor() + "'");
+	    }
+	    PreparedStatement pst = con.prepareStatement(sb.toString().replaceFirst("and", "where"));
+	    ResultSet rs = pst.executeQuery();
+	    return rs;
+	}
+	public static ResultSet list(Connection con, BeanAdministrators admin) throws Exception {
+	    StringBuffer sb = new StringBuffer("select * from administrators");
+	    if (admin.getAdministratorId() != 0) {
+	        sb.append(" and administrator_id = " + admin.getAdministratorId());
+	    }
+	    if (!StringUtil.isEmpty(admin.getName())) {
+	        sb.append(" and administrator_name = '" + admin.getName() + "'");
+	    }
+	    if (!StringUtil.isEmpty(admin.getPassword())) {
+	        sb.append(" and password = '" + admin.getPassword() + "'");
 	    }
 	    PreparedStatement pst = con.prepareStatement(sb.toString().replaceFirst("and", "where"));
 	    ResultSet rs = pst.executeQuery();
