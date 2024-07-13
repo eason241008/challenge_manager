@@ -48,9 +48,7 @@ public class Challenge_ArrangementPanel extends JPanel {
 
         JPanel buttonPanel = new JPanel();
         addButton("添加赛事", e -> addCompetition(), buttonPanel);
-        addButton("删除赛事", e -> deleteCompetition(), buttonPanel);
         addButton("修改赛事信息", e -> updateCompetition(), buttonPanel);
-//        addButton("查找赛事", e -> findCompetition(), buttonPanel);
 
         add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -186,16 +184,10 @@ public class Challenge_ArrangementPanel extends JPanel {
         }
     }
 
-    private void findCompetition() {
-        if (competitionId.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "请输入赛事ID以进行查找！");
-            return;
-        }
-
-        int competitionid = Integer.parseInt(competitionId.getText());
-        BeanChallengeArrangement challengeArrangement = Challenge_ArrangementManager.findArrangement(competitionid);
+    public void loadChallengeArrangementData(int competitionId) {
+        BeanChallengeArrangement challengeArrangement = Challenge_ArrangementManager.findArrangement(competitionId);
         if (challengeArrangement != null) {
-            competitionId.setText(String.valueOf(challengeArrangement.getCompetitionId()));
+            this.competitionId.setText(String.valueOf(challengeArrangement.getCompetitionId()));
             challengeId.setText(String.valueOf(challengeArrangement.getChallengeId()));
             competitionName.setText(challengeArrangement.getCompetitionName());
             LocalDate heldTimeValue = ((Date)challengeArrangement.getHeldTime()).toLocalDate();

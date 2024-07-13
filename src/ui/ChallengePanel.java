@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -32,7 +31,7 @@ public class ChallengePanel extends JPanel {
         challengeManager = new ChallengeManager();
         setLayout(new BorderLayout(10, 10));
 
-        Border padding = BorderFactory.createEmptyBorder(10,50,10,50);
+        Border padding = BorderFactory.createEmptyBorder(10, 50, 10, 50);
         setBorder(padding);
 
         JPanel inputPanel = new JPanel(new GridLayout(6, 2, 10, 40));
@@ -54,9 +53,7 @@ public class ChallengePanel extends JPanel {
 
         JPanel buttonPanel = new JPanel();
         addButton("添加竞赛", e -> addChallenge(), buttonPanel);
-        addButton("删除竞赛", e -> deleteChallenge(), buttonPanel);
         addButton("修改竞赛信息", e -> updateChallenge(), buttonPanel);
-//        addButton("查找竞赛", e -> findChallenge(), buttonPanel);
 
         add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -64,20 +61,20 @@ public class ChallengePanel extends JPanel {
     private JTextField createTextField() {
         JTextField textField = new JTextField();
         textField.setFont(new Font("SansSerif", Font.PLAIN, 11));
-        textField.setBorder(new EmptyBorder(1, 10, 1, 10)); 
+        textField.setBorder(new EmptyBorder(1, 10, 1, 10));
         return textField;
     }
 
     private void addTextFieldWithLabel(JPanel panel, String labelText, JTextField textField) {
         JLabel label = new JLabel(labelText);
-        label.setBorder(new EmptyBorder(1, 1, 1, 1));  
+        label.setBorder(new EmptyBorder(1, 1, 1, 1));
         panel.add(label);
         panel.add(textField);
     }
 
     private void addTextFieldWithLabel(JPanel panel, String labelText, JCheckBox checkBox) {
         JLabel label = new JLabel(labelText);
-        label.setBorder(new EmptyBorder(1, 1, 1, 1));  
+        label.setBorder(new EmptyBorder(1, 1, 1, 1));
         panel.add(label);
         panel.add(checkBox);
     }
@@ -114,17 +111,6 @@ public class ChallengePanel extends JPanel {
         }
     }
 
-    private void deleteChallenge() {
-        int challengeId = Integer.parseInt(challengeIdField.getText());
-
-        boolean success = challengeManager.deleteChallenge(challengeId);
-        if (success) {
-            JOptionPane.showMessageDialog(this, "删除成功!");
-        } else {
-            JOptionPane.showMessageDialog(this, "删除失败，可能有相关赛事存在!");
-        }
-    }
-
     private void updateChallenge() {
         int challengeId = Integer.parseInt(challengeIdField.getText());
         BeanChallenge challenge = challengeManager.findChallenge(challengeId);
@@ -147,10 +133,10 @@ public class ChallengePanel extends JPanel {
         }
     }
 
-    private void findChallenge() {
-        int challengeId = Integer.parseInt(challengeIdField.getText());
+    public void loadChallengeData(int challengeId) {
         BeanChallenge challenge = challengeManager.findChallenge(challengeId);
         if (challenge != null) {
+            challengeIdField.setText(String.valueOf(challenge.getChallengeId()));
             challengeNameField.setText(challenge.getChallengeName());
             hostField.setText(challenge.getHost());
             organizerField.setText(challenge.getOrganizer());

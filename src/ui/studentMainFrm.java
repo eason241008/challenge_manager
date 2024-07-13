@@ -178,15 +178,15 @@ public class studentMainFrm extends JFrame {
 
         private String[] getYearRange() {
             ArrayList<String> years = new ArrayList<>();
-            for (int i = 2000; i <= 2024; i++) {
+            for (int i = 2000; i <= 2030; i++) {
                 years.add(String.valueOf(i));
             }
             return years.toArray(new String[0]);
         }
 
         private void searchCompetitionInfo() {
-            String startYear = (String) startYearComboBox.getSelectedItem();
-            String endYear = (String) endYearComboBox.getSelectedItem();
+            String startYear = (String) startYearComboBox.getSelectedItem()+"-01-01";
+            String endYear = (String) endYearComboBox.getSelectedItem()+"-12-31";
 
             StringBuilder result = new StringBuilder();
             result.append("»ñ½±Çé¿ö:\n");

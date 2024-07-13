@@ -16,7 +16,7 @@ public class ChallengeManager {
 
 
     public boolean addChallenge(BeanChallenge challenge) {
-        String sql = "INSERT INTO ChallengeInfo (challenge_id, challenge_name, host, organizer, whether_zudui, des) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ChallengeInfo (challenge_id, challenge_name, host, organizer, whether_zudui, description) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = DBUtil.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, challenge.getChallengeId());
@@ -89,7 +89,7 @@ public class ChallengeManager {
                     challenge.setHost(rs.getString("host"));
                     challenge.setOrganizer(rs.getString("organizer"));
                     challenge.setWhetherZudui(rs.getBoolean("whether_zudui"));
-                    challenge.setDescription(rs.getString("des"));
+                    challenge.setDescription(rs.getString("description"));
                     return challenge;
                 }
             }

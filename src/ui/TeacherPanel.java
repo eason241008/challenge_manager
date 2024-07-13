@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.*;
 import java.awt.Font;
-
 import control.TeacherManager;
 import model.BeanTeacher;
 
@@ -49,12 +47,11 @@ public class TeacherPanel extends JPanel {
 
         JPanel buttonPanel = new JPanel();
         addButton("添加教师", e -> addTeacher(), buttonPanel);
-        addButton("删除教师", e -> deleteTeacher(), buttonPanel);
         addButton("修改教师信息", e -> updateTeacher(), buttonPanel);
-//        addButton("查找教师", e -> findTeacher(), buttonPanel);
 
         add(buttonPanel, BorderLayout.SOUTH);
     }
+
     private JTextField createTextField() {
         JTextField textField = new JTextField();
         textField.setFont(new Font("SansSerif", Font.PLAIN, 11));
@@ -78,7 +75,7 @@ public class TeacherPanel extends JPanel {
     private void addTeacher() {
         if (teacherIdField.getText().isEmpty() ||
             teacherNameField.getText().isEmpty() ||
-            departmentField.getText().isEmpty() ) {
+            departmentField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "所有字段必须填写完整才能添加教师信息！");
             return;
         }
@@ -97,23 +94,6 @@ public class TeacherPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "添加失败!");
         }
     }
-
-
-    private void deleteTeacher() {
-        if (teacherIdField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "请输入教师ID以进行删除操作！");
-            return;
-        }
-
-        int teacherId = Integer.parseInt(teacherIdField.getText());
-        boolean success = teacherManager.deleteTeacher(teacherId);
-        if (success) {
-            JOptionPane.showMessageDialog(this, "删除成功!");
-        } else {
-            JOptionPane.showMessageDialog(this, "删除失败!");
-        }
-    }
-
 
     private void updateTeacher() {
         if (teacherIdField.getText().isEmpty() ||
@@ -143,15 +123,10 @@ public class TeacherPanel extends JPanel {
         }
     }
 
-    private void findTeacher() {
-        if (teacherIdField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "请输入教师ID以进行查找！");
-            return;
-        }
-
-        int teacherId = Integer.parseInt(teacherIdField.getText());
+    public void loadTeacherData(int teacherId) {
         BeanTeacher teacher = teacherManager.findTeacher(teacherId);
         if (teacher != null) {
+            teacherIdField.setText(String.valueOf(teacher.getTeacherId()));
             teacherNameField.setText(teacher.getTeacherName());
             departmentField.setText(teacher.getDepartment());
             mobilePhoneField.setText(teacher.getMobilePhone());
@@ -160,5 +135,4 @@ public class TeacherPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "教师不存在!");
         }
     }
-
 }

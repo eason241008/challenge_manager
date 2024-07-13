@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.sql.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -83,7 +83,7 @@ public class StudentPanel extends JPanel {
         // 设置按钮面板
         JPanel buttonPanel = new JPanel();
         addButton("添加学生", e -> addStudent(), buttonPanel);
-        addButton("删除学生", e -> deleteStudent(), buttonPanel);
+//        addButton("删除学生", e -> deleteStudent(), buttonPanel);
         addButton("修改学生信息", e -> updateStudent(), buttonPanel);
 //        addButton("查找学生", e -> findStudent(), buttonPanel);
 
@@ -203,6 +203,30 @@ public class StudentPanel extends JPanel {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "请输入有效的学生ID!");
+        }
+    }
+
+    public void loadStudentData(int studentId) {
+        try {
+            Beanstudent student = studentManager.findStudent(studentId);
+            if (student != null) {
+                studentIdField.setText(String.valueOf(student.getStudentId()));
+                studentNameField.setText(student.getStudentName());
+                LocalDate enrollmentYear = ((Date)student.getEnrollmentYear()).toLocalDate();
+//                LocalDate heldTimeValue = ((Date)challengeArrangement.getHeldTime()).toLocalDate();
+                enrollmentYearField.setText(enrollmentYear.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                classField.setText(student.getClassName());
+                gradeField.setText(student.getGrade());
+                majorField.setText(student.getMajor());
+                mobilePhoneField.setText(student.getMobilePhone());
+                emailField.setText(student.getEmail());
+                qqField.setText(student.getQq());
+            } else {
+                JOptionPane.showMessageDialog(this, "学生不存在!");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "无法加载学生数据!");
         }
     }
 }

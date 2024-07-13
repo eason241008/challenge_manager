@@ -98,16 +98,16 @@ public class TeamChangeInfoPanel extends JPanel {
                         .addComponent(lblMemberIds))
                     .addGap(18)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(teamIdField, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(teamNameField, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(teamNameEngField, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(leaderIdField, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(memberIdsField, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                        .addComponent(teamIdField, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                        .addComponent(teamNameField, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                        .addComponent(teamNameEngField, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                        .addComponent(leaderIdField, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                        .addComponent(memberIdsField, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
                     .addGap(18)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(modifyMembersButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                         .addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(modifyMembersButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
                     .addGap(30))
         );
         groupLayout.setVerticalGroup(
@@ -116,27 +116,27 @@ public class TeamChangeInfoPanel extends JPanel {
                     .addGap(30)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblTeamId)
-                        .addComponent(teamIdField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(teamIdField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGap(18)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblTeamName)
-                        .addComponent(teamNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(teamNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGap(18)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblTeamNameEng)
-                        .addComponent(teamNameEngField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(teamNameEngField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
                     .addGap(18)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblLeaderId)
-                        .addComponent(leaderIdField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(leaderIdField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
                     .addGap(18)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblMemberIds)
                         .addComponent(memberIdsField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(modifyMembersButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(30, Short.MAX_VALUE))
+                    .addContainerGap(34, Short.MAX_VALUE))
         );
         setLayout(groupLayout);
     }
@@ -152,10 +152,7 @@ public class TeamChangeInfoPanel extends JPanel {
         BeanTeam team = teamManager.getTeam(teamId);
 
         if (team != null) {
-            teamNameField.setText(team.getTeamName());
-            teamNameEngField.setText(team.getTeamNameEng());
-            leaderIdField.setText("" + getTeamLeader(teamId));
-            memberIdsField.setText(getTeamMembersString(teamId));
+            loadTeamData(teamId);
         } else {
             JOptionPane.showMessageDialog(this, "未找到队伍！");
         }
@@ -263,5 +260,18 @@ public class TeamChangeInfoPanel extends JPanel {
             }
         }
         return -1;
+    }
+
+    public void loadTeamData(int teamId) {
+        BeanTeam team = teamManager.getTeam(teamId);
+        if (team != null) {
+            teamIdField.setText(String.valueOf(team.getTeamId()));
+            teamNameField.setText(team.getTeamName());
+            teamNameEngField.setText(team.getTeamNameEng());
+            leaderIdField.setText("" + getTeamLeader(teamId));
+            memberIdsField.setText(getTeamMembersString(teamId));
+        } else {
+            JOptionPane.showMessageDialog(this, "未找到队伍！");
+        }
     }
 }
