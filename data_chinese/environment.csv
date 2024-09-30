@@ -1,0 +1,10 @@
+year,crop_affected_area_(thousand_hectares),crop_total_loss_area_(thousand_hectares),drought_affected_area_(thousand_hectares),drought_total_loss_area_(thousand_hectares),flood_geological_disaster_and_typhoon_affected_area_(thousand_hectares),flood_geological_disaster_and_typhoon_total_loss_area_(thousand_hectares),hailstorm_affected_area_(thousand_hectares),hailstorm_total_loss_area_(thousand_hectares),cold_wave_and_snow_disaster_affected_area_(thousand_hectares),cold_wave_and_snow_disaster_total_loss_area_(thousand_hectares),disaster_affected_population_(ten_thousand_people),disaster_related_deaths_(people),direct_economic_loss_from_disasters_(billion_yuan)
+2022,12071.7,1351.8,6090.2,611.8,3575.8,505.2,1527.6,175.1,870.8,59.3,11267.8,554.0,2386.5
+2021,11739.2,1632.8,3426.2,464.1,5206.7,918.4,2711.9,205.7,378.6,44.4,10731.0,867.0,3340.2
+2020,19957.6,2706.0,5081.0,704.5,11059.6,1498.0,2765.2,290.8,1051.8,212.7,13829.7,591.0,3701.5
+2019,19256.9,2802.0,7838.0,1113.6,8604.8,1480.8,2228.4,171.4,585.7,36.2,13759.0,909.0,3270.9
+2018,20814.3,2585.0,7711.8,922.4,7283.1,1009.9,2406.8,196.6,3412.6,456.1,13553.9,589.0,2644.6
+2017,18478.1,1826.7,9874.8,752.4,5808.8,766.1,2268.1,225.2,524.5,83.0,14448.0,979.0,3018.7
+2016,26220.7,2902.2,9872.7,1018.3,10554.9,1442.4,2908.0,268.8,2885.0,172.7,18911.7,1706.0,5032.9
+2015,21769.8,2232.7,10609.7,1046.1,7341.3,841.0,2918.0,309.1,900.3,36.5,18620.3,967.0,2704.1
+2014,24890.7,3090.3,12271.7,1484.7,7222.0,976.9,3225.4,457.7,2132.5,168.2,24353.7,1818.0,3373.8
